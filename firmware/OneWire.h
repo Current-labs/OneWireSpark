@@ -37,7 +37,7 @@ private:
     #define ONEWIRE_PLATFORM_TARGET 0
   #elif PLATFORM_ID == 6                  // Photon
     #define ONEWIRE_PLATFORM_TARGET 1
-  #elif PLATFORM_ID == 8                  // P1 (Photon Variant)
+  #elif PLATFORM_ID == 8                  // P1 (Photon Family)
     #define ONEWIRE_PLATFORM_TARGET 1
   #endif
 
