@@ -32,7 +32,16 @@ private:
   uint16_t _pin;
 
 /**************Conditional fast pin access for Core and Photon*****************/
-  #if PLATFORM_ID == 0 // Core
+
+  #if PLATFORM_ID == 0                    // Core
+    #define ONEWIRE_PLATFORM_TARGET 0
+  #elif PLATFORM_ID == 6                  // Photon
+    #define ONEWIRE_PLATFORM_TARGET 1
+  #elif PLATFORM_ID == 8                  // P1 (Photon Variant)
+    #define ONEWIRE_PLATFORM_TARGET 1
+  #endif
+
+  #if ONEWIRE_PLATFORM_TARGET == 0
     inline void digitalWriteFastLow() {
       PIN_MAP[_pin].gpio_peripheral->BRR = PIN_MAP[_pin].gpio_pin;
     }
@@ -88,7 +97,7 @@ private:
       return GPIO_ReadInputDataBit(PIN_MAP[_pin].gpio_peripheral, PIN_MAP[_pin].gpio_pin);
     }
 
-  #elif PLATFORM_ID == 6 // Photon
+ #elif ONEWIRE_PLATFORM_TARGET == 1
     STM32_Pin_Info* PIN_MAP = HAL_Pin_Map(); // Pointer required for highest access speed
 
     inline void digitalWriteFastLow() {
